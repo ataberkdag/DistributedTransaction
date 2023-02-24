@@ -2,8 +2,12 @@
 {
     public class DependencyOptions
     {
-        public string ConnectionString { get; set; }
+        // Distributed Cache
         public bool EnableDistributedCache { get; set; }
         public DistributedCacheOptions? DistributedCacheOptions { get; set; }
+
+        // Api Versioning
+        public bool EnableApiVersioning { get; set; }
+        public CustomApiVersioningOptions? ApiVersioningOptions { get; set; }
     }
 }

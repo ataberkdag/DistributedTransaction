@@ -1,4 +1,6 @@
-﻿namespace Core.Infrastructure.Models
+﻿using Core.Application.Common;
+
+namespace Core.Infrastructure.Models
 {
     public class DistributedCacheOptions
     {

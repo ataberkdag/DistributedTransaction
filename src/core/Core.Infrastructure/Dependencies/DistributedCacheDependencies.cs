@@ -9,12 +9,6 @@ namespace Core.Infrastructure.Dependencies
     {
         public static IServiceCollection AddDistributedCache(this IServiceCollection services, DistributedCacheOptions options)
         {
-            services.AddDistributedCache(new DistributedCacheOptions { 
-                Endpoints = options.Endpoints,
-                Password = options.Password,
-                Database = options.Database
-            });
-
             services.AddStackExchangeRedisCache(setup =>
             {
                 setup.ConfigurationOptions = new ConfigurationOptions

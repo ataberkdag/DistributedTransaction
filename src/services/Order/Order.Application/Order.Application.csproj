@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Core.Application\Core.Application.csproj" />
+    <ProjectReference Include="..\Order.Domain\Order.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Queries\" />
+  </ItemGroup>
+
 </Project>

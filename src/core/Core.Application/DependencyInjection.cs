@@ -30,6 +30,7 @@ namespace Core.Application
         public static IApplicationBuilder UseCoreApplication(this IApplicationBuilder builder)
         {
             builder.UseMiddleware<ExceptionHandlingMiddleware>();
+            builder.UseMiddleware<CorrelationMiddleware>();
 
             return builder;
         }

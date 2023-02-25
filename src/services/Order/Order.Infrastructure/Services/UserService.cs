@@ -38,10 +38,11 @@ namespace Order.Infrastructure.Services
                 return result;
             }
 
-            result.Succeeded = true;
-
+            // TODO: Does not deserialize
             using var responseStream = await response.Content.ReadAsStreamAsync();
             result = await JsonSerializer.DeserializeAsync<CheckUserResult>(responseStream);
+
+            result.Succeeded = true;
 
             return result;
 

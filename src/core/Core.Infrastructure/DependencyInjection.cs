@@ -1,7 +1,10 @@
 ﻿using Core.Infrastructure.Dependencies;
 using Core.Infrastructure.DependencyModels;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace Core.Infrastructure
 {
@@ -13,6 +16,8 @@ namespace Core.Infrastructure
             ArgumentNullException.ThrowIfNull(options, nameof(options));
 
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+            services.AddHttpContextAccessor();
 
             services.AddOptions<DependencyOptions>().Configure(options);
 
@@ -30,5 +35,18 @@ namespace Core.Infrastructure
             return services;
         }
 
+        public static ILoggingBuilder AddCoreLogging(this ILoggingBuilder builder, IConfiguration configuration)
+        {
+            var logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .Enrich.FromLogContext()
+                .Enrich.WithCorrelationIdHeader("CorrelationId")
+                .CreateLogger();
+
+            builder.ClearProviders();
+            builder.AddSerilog(logger);
+
+            return builder;
+        }
     }
 }

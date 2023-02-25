@@ -3,11 +3,13 @@ using Core.Infrastructure.DependencyModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Order.Application.Models;
 using Order.Application.Services;
 using Order.Domain.Interfaces;
 using Order.Infrastructure.Persistence;
 using Order.Infrastructure.Services;
+using Serilog;
 
 namespace Order.Infrastructure
 {
@@ -55,6 +57,13 @@ namespace Order.Infrastructure
             services.AddScoped<IUserService, UserService>();
 
             return services;
+        }
+
+        public static ILoggingBuilder AddCustomLogging(this ILoggingBuilder builder, IConfiguration configuration)
+        {
+            builder.AddCoreLogging(configuration);
+
+            return builder;
         }
     }
 }

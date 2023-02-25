@@ -1,4 +1,4 @@
-﻿using Core.Infrastructure.Models;
+﻿using Core.Infrastructure.DependencyModels;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.DependencyInjection;
 

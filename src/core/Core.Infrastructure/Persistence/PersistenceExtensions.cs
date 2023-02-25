@@ -14,6 +14,8 @@ namespace Core.Infrastructure.Persistence
 
             var domainEvents = entities.SelectMany(x => x.Entity.DomainEvents).ToList();
 
+            entities.ToList().ForEach(x => x.Entity.ClearDomainEvents());
+
             if (domainEvents == null || domainEvents.Count == 0)
                 return;
 
@@ -22,8 +24,6 @@ namespace Core.Infrastructure.Persistence
             });
 
             Task.WhenAll(tasks);
-
-            return;
         }
     }
 }

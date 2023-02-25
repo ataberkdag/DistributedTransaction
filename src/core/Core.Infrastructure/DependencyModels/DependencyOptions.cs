@@ -1,4 +1,4 @@
-﻿namespace Core.Infrastructure.Models
+﻿namespace Core.Infrastructure.DependencyModels
 {
     public class DependencyOptions
     {

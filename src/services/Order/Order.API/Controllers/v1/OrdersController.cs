@@ -16,6 +16,9 @@ namespace Order.API.Controllers.v1
             _mediator = mediator;
         }
 
+        [HttpPost]
+        [MapToApiVersion("1.0")]
+        [Route("PlaceOrder")]
         public async Task<IActionResult> PlaceOrder(PlaceOrder.Command command)
         {
             return Ok(await _mediator.Send(command));

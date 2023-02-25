@@ -1,5 +1,5 @@
 ﻿using Core.Application.Services;
-using Core.Infrastructure.Models;
+using Core.Infrastructure.DependencyModels;
 using Core.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;

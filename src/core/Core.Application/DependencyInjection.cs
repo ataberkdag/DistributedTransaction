@@ -1,6 +1,8 @@
 ﻿using Core.Application.CrossCutting;
+using Core.Application.Middlewares;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -19,11 +21,18 @@ namespace Core.Application
             services.AddValidatorsFromAssembly(assembly);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
+            
 
             return services;
+        }
+
+        public static IApplicationBuilder UseCoreApplication(this IApplicationBuilder builder)
+        {
+            builder.UseMiddleware<ExceptionHandlingMiddleware>();
+
+            return builder;
         }
     }
 }

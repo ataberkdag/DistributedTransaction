@@ -24,7 +24,7 @@ namespace Core.Domain.Entities
 
         public static OutboxMessage Create(string type, string data, string queueName)
         {
-            return OutboxMessage.Create(type, data, queueName);
+            return new OutboxMessage(type, data, queueName);
         }
     }
 }

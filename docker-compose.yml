@@ -1,8 +1,60 @@
 version: '3.4'
 
 services:
-  order.api:
-    image: ${DOCKER_REGISTRY-}orderapi
-    build:
-      context: .
-      dockerfile: src/services/Order/Order.API/Dockerfile
+  postgres:
+    image: postgres:14.2-alpine3.15
+    container_name: 'postgre'
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: OrderDb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: sa1234
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
+      - PGADMIN_DEFAULT_PASSWORD=admin1234
+    restart: always
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data://root/.pgadmin
+
+  redis:
+    image: redis:6.2
+    container_name: 'redis'
+    ports:
+      - 5002:6379
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    ports:
+      - 5003:5672
+      - 5004:15672
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/
+      - rabbitmq_log:/var/log/rabbitmq
+    healthcheck:
+     test: ["CMD", "curl", "-f", "http://localhost:5004"]
+     interval: 30s
+     timeout: 10s
+     retries: 5
+
+  consul:
+    image: consul
+    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
+    hostname: consul
+    container_name: consul
+    ports:
+      - 8500:8500
+
+volumes:
+  db_volume: 
+  rabbitmq_data:
+  rabbitmq_log:
+  pgadmin_data:

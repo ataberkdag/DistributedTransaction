@@ -1,5 +1,5 @@
 ﻿using Core.Infrastructure.Dependencies;
-using Core.Infrastructure.Models;
+using Core.Infrastructure.DependencyModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -11,6 +11,8 @@ namespace Core.Infrastructure
         {
             ArgumentNullException.ThrowIfNull(services, nameof(services));
             ArgumentNullException.ThrowIfNull(options, nameof(options));
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             services.AddOptions<DependencyOptions>().Configure(options);
 

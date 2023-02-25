@@ -22,6 +22,9 @@ namespace Core.Infrastructure
             if (dependencyOptions.Value.EnableApiVersioning)
                 services.AddCustomApiVersioning(dependencyOptions.Value.ApiVersioningOptions);
 
+            if (dependencyOptions.Value.EnableHttpClient)
+                services.AddCustomHttpClient();
+
             return services;
         }
 

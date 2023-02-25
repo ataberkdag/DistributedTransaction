@@ -18,6 +18,8 @@ namespace Order.Infrastructure
                     Endpoints = configuration["DistributedCache:Endpoints"],
                     Password = configuration["DistributedCache:Password"]
                 };
+
+                opt.EnableHttpClient = true;
             });
 
             return services;

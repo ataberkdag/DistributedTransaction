@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  order.api:
+    image: ${DOCKER_REGISTRY-}orderapi
+    build:
+      context: .
+      dockerfile: src/services/Order/Order.API/Dockerfile

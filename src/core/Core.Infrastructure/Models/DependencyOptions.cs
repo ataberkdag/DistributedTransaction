@@ -9,5 +9,8 @@
         // Api Versioning
         public bool EnableApiVersioning { get; set; }
         public CustomApiVersioningOptions? ApiVersioningOptions { get; set; }
+
+        // Http Client Factory
+        public bool EnableHttpClient { get; set; }
     }
 }

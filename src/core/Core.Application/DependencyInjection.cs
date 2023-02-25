@@ -18,12 +18,11 @@ namespace Core.Application
                 x.RegisterServicesFromAssembly(assembly);
             });
 
+            services.AddAutoMapper(assembly);
             services.AddValidatorsFromAssembly(assembly);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-
-            
 
             return services;
         }

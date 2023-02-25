@@ -1,6 +1,6 @@
 ﻿using Core.Application.Common;
 
-namespace Order.Application.Models
+namespace Order.Application.Models.Contracts
 {
     public class CheckUserResult : BaseHttpResult
     {

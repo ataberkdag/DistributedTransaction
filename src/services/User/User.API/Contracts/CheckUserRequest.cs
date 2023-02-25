@@ -1,4 +1,4 @@
-﻿namespace Order.Application.Models
+﻿namespace User.API.Contracts
 {
     public class CheckUserRequest
     {

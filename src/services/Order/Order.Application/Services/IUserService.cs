@@ -1,4 +1,4 @@
-﻿using Order.Application.Models;
+﻿using Order.Application.Models.Contracts;
 
 namespace Order.Application.Services
 {

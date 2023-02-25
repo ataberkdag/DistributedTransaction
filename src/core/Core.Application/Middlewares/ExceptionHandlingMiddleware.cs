@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Application.Exceptions;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 
@@ -40,6 +41,7 @@ namespace Core.Application.Middlewares
             exception switch
             {
                 ValidationException => StatusCodes.Status400BadRequest,
+                BusinessException => StatusCodes.Status500InternalServerError,
                 _ => StatusCodes.Status500InternalServerError
             };
     }

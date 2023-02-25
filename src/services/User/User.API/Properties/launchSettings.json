@@ -11,10 +11,10 @@
   "profiles": {
     "User.API": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "dotnetRunMessages": false,
+      "launchBrowser": false,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5269",
+      "applicationUrl": "http://localhost:5099",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

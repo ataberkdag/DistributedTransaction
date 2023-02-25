@@ -3,8 +3,11 @@ using Core.Infrastructure.DependencyModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Order.Application.Models;
+using Order.Application.Services;
 using Order.Domain.Interfaces;
 using Order.Infrastructure.Persistence;
+using Order.Infrastructure.Services;
 
 namespace Order.Infrastructure
 {
@@ -44,6 +47,12 @@ namespace Order.Infrastructure
 
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderUnitOfWork, OrderUnitOfWork>();
+
+            services.AddSingleton<UserServiceConfig>(new UserServiceConfig {
+                BaseUrl = configuration["ExternalUrls:UserService"]
+            });
+
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }

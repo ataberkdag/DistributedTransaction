@@ -1,6 +1,10 @@
-﻿using Core.Application.Common;
+﻿using AutoMapper;
+using Core.Application.Common;
+using Core.Application.Exceptions;
 using FluentValidation;
 using MediatR;
+using Order.Application.Models.Contracts;
+using Order.Application.Services;
 using Order.Domain.Dtos;
 using Order.Domain.Interfaces;
 
@@ -42,18 +46,34 @@ namespace Order.Application.Features.Commands
 
         #endregion Validators
 
+        #region Mapper
+        public class OrderPlacedProfile : Profile
+        {
+            public OrderPlacedProfile()
+            {
+                CreateMap<Command, CheckUserRequest>();
+            }
+        }
+        #endregion Mapper
+
         public class CommandHandler : IRequestHandler<Command, BaseResult<Response>>
         {
             private readonly IOrderUnitOfWork _uow;
+            private readonly IUserService _userService;
+            private readonly IMapper _mapper;
 
-            public CommandHandler(IOrderUnitOfWork uow)
+            public CommandHandler(IOrderUnitOfWork uow, IUserService userService, IMapper mapper)
             {
                 _uow = uow;
+                _userService = userService;
+                _mapper = mapper;
             }
 
             public async Task<BaseResult<Response>> Handle(Command request, CancellationToken cancellationToken)
             {
-                // TODO: User check
+                var result = await _userService.CheckUser(_mapper.Map<CheckUserRequest>(request));
+                if (!result.Succeeded)
+                    throw new BusinessException("1000", "User is not active!");
 
                 var order = Order.Domain.Entities.Order.CreateOrder(request.UserId, request.OrderItems);
 

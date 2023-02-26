@@ -12,5 +12,9 @@
 
         // Http Client Factory
         public bool EnableHttpClient { get; set; }
+
+        // Message Bus - Broker
+        public bool EnableMessageBus { get; set; }
+        public MessageBusOptions? MessageBusOptions { get; set; }
     }
 }

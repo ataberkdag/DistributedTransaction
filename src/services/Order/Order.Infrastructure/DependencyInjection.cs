@@ -1,5 +1,6 @@
 ﻿using Core.Infrastructure;
 using Core.Infrastructure.DependencyModels;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +46,27 @@ namespace Order.Infrastructure
 
                 // Http Client
                 opt.EnableHttpClient = true;
+
+                // Message Broker - Bus
+                opt.EnableMessageBus = true;
+                opt.MessageBusOptions = new MessageBusOptions
+                {
+                    Host = configuration["MessageBroker:Host"],
+                    UserName = configuration["MessageBroker:UserName"],
+                    Password = configuration["MessageBroker:Password"],
+                    Consumers = (cfg) =>
+                    {
+                        // TODO: Consumers will add.
+                        //cfg.AddConsumer<>();
+
+                        return cfg;
+                    },
+                    Endpoints = (cfg) =>
+                    {
+                        // TODO: Receive Endpoints will add.
+                        //cfg.ReceiveEndpoint();
+                    }
+                };
             });
 
             services.AddScoped<IOrderRepository, OrderRepository>();

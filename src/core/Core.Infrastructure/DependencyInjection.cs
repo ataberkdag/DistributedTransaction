@@ -32,6 +32,9 @@ namespace Core.Infrastructure
             if (dependencyOptions.Value.EnableHttpClient)
                 services.AddCustomHttpClient();
 
+            if (dependencyOptions.Value.EnableMessageBus)
+                services.AddMessageBus(dependencyOptions.Value.MessageBusOptions);
+
             return services;
         }
 

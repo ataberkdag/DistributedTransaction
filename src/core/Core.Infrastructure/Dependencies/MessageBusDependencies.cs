@@ -1,4 +1,6 @@
 ﻿using Core.Infrastructure.DependencyModels;
+using Core.Infrastructure.Services;
+using Core.Infrastructure.Services.Interfaces;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,6 +24,9 @@ namespace Core.Infrastructure.Dependencies
                     options.Endpoints(cfg);
                 });
             });
+
+            if (options.IsProducer)
+                services.AddSingleton<IMassTransitHandler, MassTransitHandler>();
 
             return services;
         }

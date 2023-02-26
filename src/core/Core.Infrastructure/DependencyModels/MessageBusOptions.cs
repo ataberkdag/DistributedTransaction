@@ -10,5 +10,7 @@ namespace Core.Infrastructure.DependencyModels
 
         public Func<IBusRegistrationConfigurator, IRegistrationConfigurator> Consumers { get; set; }
         public Action<IRabbitMqBusFactoryConfigurator> Endpoints { get; set; }
+
+        public bool IsProducer { get; set; }
     }
 }

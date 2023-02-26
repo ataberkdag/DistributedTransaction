@@ -1,4 +1,5 @@
-﻿using Core.Infrastructure.DependencyModels;
+﻿using Core.Application.Services;
+using Core.Infrastructure.DependencyModels;
 using Core.Infrastructure.Services;
 using Core.Infrastructure.Services.Interfaces;
 using MassTransit;
@@ -27,6 +28,9 @@ namespace Core.Infrastructure.Dependencies
 
             if (options.IsProducer)
                 services.AddSingleton<IMassTransitHandler, MassTransitHandler>();
+
+            if (options.IntegrationEventBuilderType != null)
+                services.AddSingleton(typeof(IIntegrationEventBuilder), options.IntegrationEventBuilderType);
 
             return services;
         }

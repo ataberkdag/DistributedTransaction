@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Core.Application.Services;
+using MassTransit;
 
 namespace Core.Infrastructure.DependencyModels
 {
@@ -12,5 +13,7 @@ namespace Core.Infrastructure.DependencyModels
         public Action<IRabbitMqBusFactoryConfigurator> Endpoints { get; set; }
 
         public bool IsProducer { get; set; }
+
+        public Type IntegrationEventBuilderType { get; set; }
     }
 }

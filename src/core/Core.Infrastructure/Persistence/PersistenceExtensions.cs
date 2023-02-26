@@ -1,4 +1,5 @@
-﻿using Core.Domain.Base;
+﻿using Core.Application.Services;
+using Core.Domain.Base;
 using Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -7,7 +8,7 @@ namespace Core.Infrastructure.Persistence
 {
     public static class PersistenceExtensions
     {
-        public static void CheckDomainEvents(this DbContext context)
+        public static void CheckDomainEvents(this DbContext context, IIntegrationEventBuilder eventBuilder)
         {
             var entities = context.ChangeTracker.Entries<BaseRootEntity>()
                 .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any());
@@ -20,7 +21,10 @@ namespace Core.Infrastructure.Persistence
                 return;
 
             var tasks = domainEvents.Select(async (domainEvent) => {
-                await context.Set<OutboxMessage>().AddAsync(OutboxMessage.Create(domainEvent.GetType().AssemblyQualifiedName, JsonSerializer.Serialize(domainEvent), ""));                
+                var integrationEvent = eventBuilder.GetIntegrationEvent(domainEvent);
+                var queueName = eventBuilder.GetQueueName(integrationEvent);
+
+                await context.Set<OutboxMessage>().AddAsync(OutboxMessage.Create(integrationEvent.GetType().AssemblyQualifiedName, JsonSerializer.Serialize(integrationEvent), queueName));
             });
 
             Task.WhenAll(tasks);

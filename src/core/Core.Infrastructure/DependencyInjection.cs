@@ -1,5 +1,7 @@
-﻿using Core.Infrastructure.Dependencies;
+﻿using Core.Application.Services;
+using Core.Infrastructure.Dependencies;
 using Core.Infrastructure.DependencyModels;
+using Core.Infrastructure.Persistence;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,6 +24,10 @@ namespace Core.Infrastructure
             services.AddOptions<DependencyOptions>().Configure(options);
 
             var dependencyOptions = services.BuildServiceProvider().GetService<IOptions<DependencyOptions>>();
+
+            // TODO: Bug
+            if (dependencyOptions.Value.EnableDbContextHandler)
+                services.AddScoped<IDbContextHandler, DbContextHandler>();
 
             if (dependencyOptions.Value.EnableDistributedCache)
                 services.AddDistributedCache(dependencyOptions.Value.DistributedCacheOptions);

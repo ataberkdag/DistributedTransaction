@@ -1,7 +1,5 @@
-using Microsoft.Extensions.Options;
 using Order.Application;
 using Order.Infrastructure;
-using Serilog;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

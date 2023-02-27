@@ -1,18 +1,14 @@
 ﻿using Core.Infrastructure;
 using Core.Infrastructure.DependencyModels;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Order.Application.Models;
-using Order.Application.Services;
-using Order.Domain.Interfaces;
-using Order.Infrastructure.Persistence;
-using Order.Infrastructure.Services;
-using Serilog;
+using Stock.Domain.Interfaces;
+using Stock.Infrastructure.Persistence;
+using Stock.Infrastructure.Services;
 
-namespace Order.Infrastructure
+namespace Stock.Infrastructure
 {
     public static class DependencyInjection
     {
@@ -20,14 +16,11 @@ namespace Order.Infrastructure
         {
             ArgumentNullException.ThrowIfNull(services, nameof(services));
 
-            services.AddDbContext<OrderDbContext>(opt => {
+            services.AddDbContext<StockDbContext>(opt => {
                 opt.UseNpgsql(configuration.GetConnectionString("Database"));
             });
 
             services.AddCoreInfrastructure(opt => {
-
-                // DbContext Handler
-                opt.EnableDbContextHandler = false;
 
                 // Distributed Cache
                 opt.EnableDistributedCache = true;
@@ -37,18 +30,6 @@ namespace Order.Infrastructure
                     Endpoints = configuration["DistributedCache:Endpoints"],
                     Password = configuration["DistributedCache:Password"]
                 };
-
-                // Api Versioning
-                opt.EnableApiVersioning = true;
-                opt.ApiVersioningOptions = new Core.Infrastructure.DependencyModels.CustomApiVersioningOptions
-                {
-                    ApiVersionReaders = new List<CustomApiVersionReader> { CustomApiVersionReader.Url},
-                    DefaultApiVersion = 1,
-                    EnableReportApiVersion = true
-                };
-
-                // Http Client
-                opt.EnableHttpClient = true;
 
                 // Message Broker - Bus
                 opt.EnableMessageBus = true;
@@ -69,18 +50,12 @@ namespace Order.Infrastructure
                         // TODO: Receive Endpoints will add.
                         //cfg.ReceiveEndpoint();
                     },
-                    IntegrationEventBuilderType = typeof(OrderIntegrationEventBuilder)
+                    IntegrationEventBuilderType = typeof(StockIntegrationEventBuilder)
                 };
             });
 
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IOrderUnitOfWork, OrderUnitOfWork>();
-
-            services.AddSingleton<UserServiceConfig>(new UserServiceConfig {
-                BaseUrl = configuration["ExternalUrls:UserService"]
-            });
-
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<IStockUnitOfWork, StockUnitOfWork>();
 
             return services;
         }

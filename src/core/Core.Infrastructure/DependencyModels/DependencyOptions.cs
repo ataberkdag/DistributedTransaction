@@ -2,6 +2,9 @@
 {
     public class DependencyOptions
     {
+        // DbContext Handler
+        public bool EnableDbContextHandler { get; set; }
+
         // Distributed Cache
         public bool EnableDistributedCache { get; set; }
         public DistributedCacheOptions? DistributedCacheOptions { get; set; }

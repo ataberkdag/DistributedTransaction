@@ -1,4 +1,5 @@
-﻿using Order.Application.Models;
+﻿using Newtonsoft.Json;
+using Order.Application.Models;
 using Order.Application.Models.Contracts;
 using Order.Application.Services;
 using System.Text.Json;
@@ -39,8 +40,8 @@ namespace Order.Infrastructure.Services
             }
 
             // TODO: Does not deserialize
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-            result = await JsonSerializer.DeserializeAsync<CheckUserResult>(responseStream);
+            var responseStream = await response.Content.ReadAsStringAsync();
+            result = JsonConvert.DeserializeObject<CheckUserResult>(responseStream);
 
             result.Succeeded = true;
 

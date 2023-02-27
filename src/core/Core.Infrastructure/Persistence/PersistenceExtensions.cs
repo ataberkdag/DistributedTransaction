@@ -2,7 +2,7 @@
 using Core.Domain.Base;
 using Core.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Core.Infrastructure.Persistence
 {
@@ -24,7 +24,7 @@ namespace Core.Infrastructure.Persistence
                 var integrationEvent = eventBuilder.GetIntegrationEvent(domainEvent);
                 var queueName = eventBuilder.GetQueueName(integrationEvent);
 
-                await context.Set<OutboxMessage>().AddAsync(OutboxMessage.Create(integrationEvent.GetType().AssemblyQualifiedName, JsonSerializer.Serialize(integrationEvent), queueName));
+                await context.Set<OutboxMessage>().AddAsync(OutboxMessage.Create(integrationEvent.GetType().AssemblyQualifiedName, JsonConvert.SerializeObject(integrationEvent), queueName));
             });
 
             Task.WhenAll(tasks);

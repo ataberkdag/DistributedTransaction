@@ -1,22 +1,21 @@
 ﻿using Core.Infrastructure;
 using Core.Infrastructure.DependencyModels;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Order.Application.Models;
 using Order.Application.Services;
 using Order.Domain.Interfaces;
 using Order.Infrastructure.Persistence;
 using Order.Infrastructure.Services;
-using Serilog;
 
 namespace Order.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, Action<MessageBusOptions> messageBusOptions = null)
         {
             ArgumentNullException.ThrowIfNull(services, nameof(services));
 
@@ -51,26 +50,16 @@ namespace Order.Infrastructure
                 opt.EnableHttpClient = true;
 
                 // Message Broker - Bus
-                opt.EnableMessageBus = true;
-                opt.MessageBusOptions = new MessageBusOptions
+                if (messageBusOptions != null)
                 {
-                    Host = configuration["MessageBroker:Host"],
-                    UserName = configuration["MessageBroker:UserName"],
-                    Password = configuration["MessageBroker:Password"],
-                    Consumers = (cfg) =>
-                    {
-                        // TODO: Consumers will add.
-                        //cfg.AddConsumer<>();
+                    opt.EnableMessageBus = true;
 
-                        return cfg;
-                    },
-                    Endpoints = (cfg) =>
-                    {
-                        // TODO: Receive Endpoints will add.
-                        //cfg.ReceiveEndpoint();
-                    },
-                    IntegrationEventBuilderType = typeof(OrderIntegrationEventBuilder)
-                };
+                    services.AddOptions<MessageBusOptions>().Configure(messageBusOptions);
+
+                    var messageBusOpt = services.BuildServiceProvider().GetService<IOptions<MessageBusOptions>>();
+
+                    opt.MessageBusOptions = messageBusOpt.Value;
+                }
             });
 
             services.AddScoped<IOrderRepository, OrderRepository>();

@@ -24,7 +24,7 @@ namespace Core.Infrastructure.Persistence
                 var integrationEvent = eventBuilder.GetIntegrationEvent(domainEvent);
                 var queueName = eventBuilder.GetQueueName(integrationEvent);
 
-                await context.Set<OutboxMessage>().AddAsync(OutboxMessage.Create(integrationEvent.GetType().AssemblyQualifiedName, JsonConvert.SerializeObject(integrationEvent), queueName));
+                await context.Set<OutboxMessage>().AddAsync(OutboxMessage.Create(integrationEvent.GetType().AssemblyQualifiedName, JsonConvert.SerializeObject(integrationEvent), queueName ?? string.Empty));
             });
 
             Task.WhenAll(tasks);

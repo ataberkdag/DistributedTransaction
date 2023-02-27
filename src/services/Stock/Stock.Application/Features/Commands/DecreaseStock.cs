@@ -35,7 +35,7 @@ namespace Stock.Application.Features.Commands
 
                     if (stock == null)
                     {
-                        stock = Stock.Domain.Entities.Stock.Create(orderItem.ItemId, orderItem.Quantity);
+                        stock = Stock.Domain.Entities.Stock.Create(orderItem.ItemId, orderItem.Quantity, 12);
 
                         await _uow.Stocks.Add(stock);
                     }

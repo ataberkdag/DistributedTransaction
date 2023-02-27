@@ -1,7 +1,9 @@
-﻿using Core.Application.Services;
+﻿using Core.Application.Exceptions;
+using Core.Application.Services;
 using Core.Domain.Base;
 using Messages;
 using Messages.IntegrationEvents;
+using Stock.Domain.Events;
 
 namespace Stock.Infrastructure.Services
 {
@@ -9,12 +11,18 @@ namespace Stock.Infrastructure.Services
     {
         private static readonly List<KeyValuePair<Type, string>> _queues = new()
         {
-            new KeyValuePair<Type, string>(typeof(OrderPlacedIE), "Order_Placed")
+
         };
 
         public IIntegrationEvent GetIntegrationEvent(IDomainEvent domainEvent)
         {
-            throw new NotImplementedException();
+            if (domainEvent is StockDecreased stockDecreased)
+                return new StockDecreasedIE(stockDecreased.CorrelationId, stockDecreased.UserId, stockDecreased.TotalAmount);
+
+            if (domainEvent is StockFailed stockFailed)
+                return new StockFailedIE(stockFailed.CorrelationId, stockFailed.UserId);
+
+            throw new BusinessException("8888", "Integration Event Error");
         }
 
         public string GetQueueName(IIntegrationEvent integrationEvent)

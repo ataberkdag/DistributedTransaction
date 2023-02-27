@@ -12,7 +12,7 @@ using Stock.Infrastructure.Persistence;
 namespace Stock.Infrastructure.Migrations
 {
     [DbContext(typeof(StockDbContext))]
-    [Migration("20230227174135_v1.0.0")]
+    [Migration("20230227202052_v1.0.0")]
     partial class v100
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,9 @@ namespace Stock.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");

@@ -22,7 +22,7 @@ namespace Core.Infrastructure.Dependencies
                         h.Password(options.Password);
                     });
 
-                    options.Endpoints(cfg);
+                    options.Endpoints(context, cfg);
                 });
             });
 

@@ -10,7 +10,7 @@ namespace Core.Infrastructure.Persistence.Configurations
         {
             builder.Property(x => x.Type).IsRequired();
             builder.Property(x => x.Data).IsRequired();
-            builder.Property(x => x.QueueName).IsRequired();
+            builder.Property(x => x.QueueName);
         }
     }
 }

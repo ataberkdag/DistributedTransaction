@@ -1,5 +1,4 @@
-﻿using Core.Application.Services;
-using MassTransit;
+﻿using MassTransit;
 
 namespace Core.Infrastructure.DependencyModels
 {
@@ -10,7 +9,7 @@ namespace Core.Infrastructure.DependencyModels
         public string Password { get; set; }
 
         public Func<IBusRegistrationConfigurator, IRegistrationConfigurator> Consumers { get; set; }
-        public Action<IRabbitMqBusFactoryConfigurator> Endpoints { get; set; }
+        public Action<IBusRegistrationContext, IRabbitMqBusFactoryConfigurator> Endpoints { get; set; }
 
         public bool IsProducer { get; set; }
 

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Stock.Domain.Interfaces;
 using Stock.Infrastructure.Persistence;
 using Stock.Infrastructure.Services;
@@ -12,7 +13,7 @@ namespace Stock.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, Action<MessageBusOptions> messageBusOptions = null)
         {
             ArgumentNullException.ThrowIfNull(services, nameof(services));
 
@@ -32,26 +33,16 @@ namespace Stock.Infrastructure
                 };
 
                 // Message Broker - Bus
-                opt.EnableMessageBus = true;
-                opt.MessageBusOptions = new MessageBusOptions
+                if (messageBusOptions != null)
                 {
-                    Host = configuration["MessageBroker:Host"],
-                    UserName = configuration["MessageBroker:UserName"],
-                    Password = configuration["MessageBroker:Password"],
-                    Consumers = (cfg) =>
-                    {
-                        // TODO: Consumers will add.
-                        //cfg.AddConsumer<>();
+                    opt.EnableMessageBus = true;
 
-                        return cfg;
-                    },
-                    Endpoints = (cfg) =>
-                    {
-                        // TODO: Receive Endpoints will add.
-                        //cfg.ReceiveEndpoint();
-                    },
-                    IntegrationEventBuilderType = typeof(StockIntegrationEventBuilder)
-                };
+                    services.AddOptions<MessageBusOptions>().Configure(messageBusOptions);
+
+                    var messageBusOpt = services.BuildServiceProvider().GetService<IOptions<MessageBusOptions>>();
+
+                    opt.MessageBusOptions = messageBusOpt.Value;
+                }
             });
 
             services.AddScoped<IStockRepository, StockRepository>();

@@ -11,7 +11,7 @@ namespace Order.Infrastructure.Services
     {
         private static readonly List<KeyValuePair<Type, string>> _queues = new()
         {
-            new KeyValuePair<Type, string>(typeof(OrderPlacedIE), "Order_Placed")
+
         };
 
         public IIntegrationEvent GetIntegrationEvent(IDomainEvent domainEvent)

@@ -41,7 +41,7 @@ namespace Core.Application.Middlewares
             exception switch
             {
                 ValidationException => StatusCodes.Status400BadRequest,
-                BusinessException => StatusCodes.Status500InternalServerError,
+                BusinessException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
     }

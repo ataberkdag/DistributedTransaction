@@ -9,5 +9,6 @@
         public const string OrderApplicationName = "Order";
         public const string StockApplicationName = "Stock";
         public const string ReportApplicationName = "Report";
+        public const string PaymentApplicationName = "Payment";
     }
 }

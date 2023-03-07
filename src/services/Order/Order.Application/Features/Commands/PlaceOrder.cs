@@ -73,9 +73,9 @@ namespace Order.Application.Features.Commands
             {
                 var result = await _userService.CheckUser(_mapper.Map<CheckUserRequest>(request));
                 if (!result.Succeeded)
-                    throw new BusinessException("1000", "User is not active!");
+                    throw new BusinessException(BusinessExceptionCodes.UserInactive.GetHashCode().ToString(), BusinessExceptionCodes.UserInactive.ToString());
 
-                var order = Order.Domain.Entities.Order.CreateOrder(request.UserId, request.OrderItems);
+                var order = Order.Domain.Entities.Order.PlaceOrder(request.UserId, request.OrderItems);
 
                 await _uow.Orders.Add(order);
 

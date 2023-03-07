@@ -3,12 +3,12 @@ using Core.Application.Services;
 using Core.Domain.Base;
 using Messages;
 using Messages.IntegrationEvents;
-using Stock.Application;
-using Stock.Domain.Events;
+using Payment.Application;
+using Payment.Domain.Events;
 
-namespace Stock.Infrastructure.Services
+namespace Payment.Infrastructure.Services
 {
-    public class StockIntegrationEventBuilder : IIntegrationEventBuilder
+    public class PaymentIntegrationEventBuilder : IIntegrationEventBuilder
     {
         private static readonly List<KeyValuePair<Type, string>> _queues = new()
         {
@@ -17,11 +17,11 @@ namespace Stock.Infrastructure.Services
 
         public IIntegrationEvent GetIntegrationEvent(IDomainEvent domainEvent)
         {
-            if (domainEvent is StockDecreased stockDecreased)
-                return new StockDecreasedIE(stockDecreased.CorrelationId, stockDecreased.UserId, stockDecreased.TotalAmount);
+            if (domainEvent is PaymentSucceeded paymentSucceeded)
+                return new PaymentSucceededIE(paymentSucceeded.CorrelationId, paymentSucceeded.UserId);
 
-            if (domainEvent is StockFailed stockFailed)
-                return new StockFailedIE(stockFailed.CorrelationId, stockFailed.UserId);
+            if (domainEvent is PaymentFailed paymentFailed)
+                return new StockFailedIE(paymentFailed.CorrelationId, paymentFailed.UserId);
 
             throw new BusinessException(BusinessExceptionCodes.IntegrationEventError.GetHashCode().ToString(), BusinessExceptionCodes.IntegrationEventError.ToString());
         }

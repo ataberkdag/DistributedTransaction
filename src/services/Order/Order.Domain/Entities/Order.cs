@@ -42,7 +42,7 @@ namespace Order.Domain.Entities
             StatusDescription = description;
         }
 
-        public static Order CreateOrder(Guid userId, List<OrderItemDto> orderItemDtos)
+        public static Order PlaceOrder(Guid userId, List<OrderItemDto> orderItemDtos)
         {
             return new Order(userId, orderItemDtos);
         }

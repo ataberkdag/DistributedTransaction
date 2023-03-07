@@ -3,6 +3,7 @@ using Core.Application.Services;
 using Core.Domain.Base;
 using Messages;
 using Messages.IntegrationEvents;
+using Order.Application;
 using Order.Domain.Events;
 
 namespace Order.Infrastructure.Services
@@ -21,7 +22,7 @@ namespace Order.Infrastructure.Services
                 return new OrderPlacedIE(orderPlaced.CorrelationId, orderPlaced.UserId, orderPlaced.OrderItems.Select(x => new OrderItemDto(x.ItemId, x.Quantity)).ToList());
             }
 
-            throw new BusinessException("8888", "Integration Event Error");
+            throw new BusinessException(BusinessExceptionCodes.IntegrationEventError.GetHashCode().ToString(), BusinessExceptionCodes.IntegrationEventError.ToString());
         }
 
         public string GetQueueName(IIntegrationEvent integrationEvent)

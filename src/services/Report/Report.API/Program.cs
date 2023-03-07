@@ -18,6 +18,9 @@ builder.Services.AddInfrastructure(builder.Configuration, x => {
     {
         cfg.AddConsumer<OrderPlacedEventConsumer>();
         cfg.AddConsumer<StockDecreasedEventConsumer>();
+        cfg.AddConsumer<StockFailedEventConsumer>();
+        cfg.AddConsumer<PaymentFailedEventConsumer>();
+        cfg.AddConsumer<PaymentSucceededEventConsumer>();
 
         return cfg;
     };
@@ -29,6 +32,18 @@ builder.Services.AddInfrastructure(builder.Configuration, x => {
 
         cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.StockDecreasedQueueName, "_", RabbitMqConsts.ReportApplicationName), e => {
             e.ConfigureConsumer<StockDecreasedEventConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.StockFailedQueueName, "_", RabbitMqConsts.ReportApplicationName), e => {
+            e.ConfigureConsumer<StockFailedEventConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.PaymentSucceededQueueName, "_", RabbitMqConsts.ReportApplicationName), e => {
+            e.ConfigureConsumer<PaymentSucceededEventConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.PaymentFailedQueueName, "_", RabbitMqConsts.ReportApplicationName), e => {
+            e.ConfigureConsumer<PaymentFailedEventConsumer>(context);
         });
     };
 });

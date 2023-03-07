@@ -6,20 +6,20 @@ using Order.Application.Features.Commands;
 
 namespace Order.API.Consumers
 {
-    public class StockFailedConsumer : IConsumer<StockFailedIE>
+    public class PaymentFailedConsumer : IConsumer<PaymentFailedIE>
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
-        public StockFailedConsumer(IMediator mediator, IMapper mapper)
+        public PaymentFailedConsumer(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
             _mapper = mapper;
         }
 
-        public async Task Consume(ConsumeContext<StockFailedIE> context)
+        public async Task Consume(ConsumeContext<PaymentFailedIE> context)
         {
-            await _mediator.Send(_mapper.Map<StockFailed.Command>(context.Message));
+            await _mediator.Send(_mapper.Map<PaymentFailed.Command>(context.Message));
         }
     }
 }

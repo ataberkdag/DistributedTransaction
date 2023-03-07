@@ -21,17 +21,6 @@ namespace Payment.Infrastructure
             });
 
             services.AddCoreInfrastructure(opt => {
-
-                // Distributed Cache
-                /*
-                opt.EnableDistributedCache = true;
-                opt.DistributedCacheOptions = new Core.Infrastructure.DependencyModels.DistributedCacheOptions
-                {
-                    Database = Convert.ToInt32(configuration["DistributedCache:Database"]),
-                    Endpoints = configuration["DistributedCache:Endpoints"],
-                    Password = configuration["DistributedCache:Password"]
-                };*/
-
                 // Message Broker - Bus
                 if (messageBusOptions != null)
                 {

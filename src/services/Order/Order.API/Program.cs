@@ -1,7 +1,5 @@
-using Core.Infrastructure.DependencyModels;
 using MassTransit;
 using Messages;
-using Order.API;
 using Order.API.Consumers;
 using Order.Application;
 using Order.Infrastructure;
@@ -21,6 +19,8 @@ builder.Services.AddInfrastructure(builder.Configuration, x => {
     x.Consumers = (cfg) =>
     {
         cfg.AddConsumer<StockFailedConsumer>();
+        cfg.AddConsumer<PaymentFailedConsumer>();
+        cfg.AddConsumer<PaymentSucceededConsumer>();
 
         return cfg;
     };
@@ -28,6 +28,14 @@ builder.Services.AddInfrastructure(builder.Configuration, x => {
     {
         cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.StockFailedQueueName, "_", RabbitMqConsts.OrderApplicationName), e => {
             e.ConfigureConsumer<StockFailedConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.PaymentFailedQueueName, "_", RabbitMqConsts.OrderApplicationName), e => {
+            e.ConfigureConsumer<PaymentFailedConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.PaymentSucceededQueueName, "_", RabbitMqConsts.OrderApplicationName), e => {
+            e.ConfigureConsumer<PaymentSucceededConsumer>(context);
         });
     };
     x.IntegrationEventBuilderType = typeof(OrderIntegrationEventBuilder);

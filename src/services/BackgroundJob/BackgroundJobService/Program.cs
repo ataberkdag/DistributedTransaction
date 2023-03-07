@@ -1,9 +1,7 @@
-using BackgroundJobService;
 using BackgroundJobService.OutboxWorkers;
 using Core.Application.Services;
 using Core.Infrastructure.Dependencies;
 using Core.Infrastructure.Services;
-using Core.Infrastructure.Services.Interfaces;
 
 IConfiguration Configuration = null;
 
@@ -20,7 +18,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddSingleton<IDbConnectionFactory>(x => new PostgreDbConnectionFactory("Order", Configuration.GetConnectionString("OrderDatabase")));
-        //services.AddSingleton<IDbConnectionFactory>(x => new PostgreDbConnectionFactory("Stock", Configuration.GetConnectionString("StockDatabase")));
+        services.AddSingleton<IDbConnectionFactory>(x => new PostgreDbConnectionFactory("Stock", Configuration.GetConnectionString("StockDatabase")));
+        services.AddSingleton<IDbConnectionFactory>(x => new PostgreDbConnectionFactory("Payment", Configuration.GetConnectionString("PaymentDatabase")));
 
         services.AddMessageBus(new Core.Infrastructure.DependencyModels.MessageBusOptions {
             Host = Configuration["MessageBroker:Host"],
@@ -38,6 +37,8 @@ IHost host = Host.CreateDefaultBuilder(args)
         });
 
         services.AddHostedService<OrderOutboxWorker>();
+        services.AddHostedService<StockOutboxWorker>();
+        services.AddHostedService<PaymentOutboxWorker>();
 
     })
     .Build();

@@ -6,15 +6,15 @@ using Newtonsoft.Json;
 
 namespace BackgroundJobService.OutboxWorkers
 {
-    public class StockOutboxWorker : BackgroundService
+    public class PaymentOutboxWorker : BackgroundService
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly IMassTransitHandler _massTransitHandler;
 
-        public StockOutboxWorker(IEnumerable<IDbConnectionFactory> dbConnectionFactory,
+        public PaymentOutboxWorker(IEnumerable<IDbConnectionFactory> dbConnectionFactory,
             IMassTransitHandler massTransitHandler)
         {
-            _dbConnectionFactory = dbConnectionFactory.First(x => x.ApplicationName == "Stock");
+            _dbConnectionFactory = dbConnectionFactory.First(x => x.ApplicationName == "Payment");
             _massTransitHandler = massTransitHandler;
         }
 

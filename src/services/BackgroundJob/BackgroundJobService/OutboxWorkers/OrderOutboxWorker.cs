@@ -11,10 +11,10 @@ namespace BackgroundJobService.OutboxWorkers
         private readonly IDbConnectionFactory _dbConnectionFactory;
         private readonly IMassTransitHandler _massTransitHandler;
 
-        public OrderOutboxWorker(IDbConnectionFactory dbConnectionFactory,
+        public OrderOutboxWorker(IEnumerable<IDbConnectionFactory> dbConnectionFactory,
             IMassTransitHandler massTransitHandler)
         {
-            _dbConnectionFactory = dbConnectionFactory;
+            _dbConnectionFactory = dbConnectionFactory.First(x => x.ApplicationName == "Order");
             _massTransitHandler = massTransitHandler;
         }
 

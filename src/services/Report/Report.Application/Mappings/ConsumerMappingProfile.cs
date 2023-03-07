@@ -13,6 +13,8 @@ namespace Report.Application.Mappings
             CreateMap<OrderPlacedIE, LogEvent.Command>().ReverseMap();
             CreateMap<StockDecreasedIE, LogEvent.Command>().ReverseMap();
             CreateMap<StockFailedIE, LogEvent.Command>().ReverseMap();
+            CreateMap<PaymentSucceededIE, LogEvent.Command>().ReverseMap();
+            CreateMap<PaymentFailedIE, LogEvent.Command>().ReverseMap();
         }
     }
 }

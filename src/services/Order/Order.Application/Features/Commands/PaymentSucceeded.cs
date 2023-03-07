@@ -5,7 +5,7 @@ using Order.Domain.Interfaces;
 
 namespace Order.Application.Features.Commands
 {
-    public static class StockFailed
+    public static class PaymentSucceeded
     {
         public class Command : IRequest<BaseResult>
         {
@@ -32,7 +32,7 @@ namespace Order.Application.Features.Commands
                 if (order.Status != Domain.Entities.OrderStatus.Processing)
                     throw new BusinessException(BusinessExceptionCodes.OrderProcessed.GetHashCode().ToString(), BusinessExceptionCodes.OrderProcessed.ToString());
 
-                order.FailOrder("Stock failed");
+                order.CompleteOrder();
 
                 await _uow.SaveChangesAsync();
 
@@ -40,5 +40,4 @@ namespace Order.Application.Features.Commands
             }
         }
     }
-    
 }

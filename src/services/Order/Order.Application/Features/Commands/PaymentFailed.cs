@@ -5,12 +5,12 @@ using Order.Domain.Interfaces;
 
 namespace Order.Application.Features.Commands
 {
-    public static class StockFailed
+    public static class PaymentFailed
     {
         public class Command : IRequest<BaseResult>
         {
-            public Guid CorrelationId { get; private set; }
-            public Guid UserId { get; private set; }
+            public Guid CorrelationId { get; set; }
+            public Guid UserId { get; set; }
         }
 
         public class CommandHandler : IRequestHandler<Command, BaseResult>
@@ -32,7 +32,7 @@ namespace Order.Application.Features.Commands
                 if (order.Status != Domain.Entities.OrderStatus.Processing)
                     throw new BusinessException(BusinessExceptionCodes.OrderProcessed.GetHashCode().ToString(), BusinessExceptionCodes.OrderProcessed.ToString());
 
-                order.FailOrder("Stock failed");
+                order.FailOrder("Payment failed");
 
                 await _uow.SaveChangesAsync();
 
@@ -40,5 +40,4 @@ namespace Order.Application.Features.Commands
             }
         }
     }
-    
 }

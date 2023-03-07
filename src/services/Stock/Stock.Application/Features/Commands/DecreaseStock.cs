@@ -2,6 +2,7 @@
 using Core.Application.Services;
 using MediatR;
 using Stock.Domain.Dtos;
+using Stock.Domain.Entities;
 using Stock.Domain.Interfaces;
 
 namespace Stock.Application.Features.Commands
@@ -28,25 +29,16 @@ namespace Stock.Application.Features.Commands
 
             public async Task<BaseResult> Handle(Command request, CancellationToken cancellationToken)
             {
-                var lastOrderItem = request.OrderItems?.Last();
-                foreach (var orderItem in request.OrderItems)
-                {
-                    var stock = (await _uow.Stocks.FindByQuery(x => x.ItemId == orderItem.ItemId)).FirstOrDefault();
+                var firstOrderItem = request.OrderItems?.FirstOrDefault();
+                if (firstOrderItem == null)
+                    throw new Exception();
 
-                    if (stock == null)
-                    {
-                        stock = Stock.Domain.Entities.Stock.Create(orderItem.ItemId, orderItem.Quantity, 12);
+                var stock = Stock.Domain.Entities.Stock.Create(firstOrderItem.ItemId, firstOrderItem.Quantity, 12);
 
-                        await _uow.Stocks.Add(stock);
-                    }
+                await _uow.Stocks.Add(stock);
 
-                    var decreaseResult = stock?
-                        .DecreaseStock(request.CorrelationId, request.UserId, orderItem.Quantity, orderItem.Equals(lastOrderItem));
-
-                    if (decreaseResult == false)
-                        break;
-
-                }
+                var decreaseResult = stock?
+                    .DecreaseStock(request.CorrelationId, request.UserId, firstOrderItem.Quantity, true);
 
                 await this._uow.SaveChangesAsync();
 

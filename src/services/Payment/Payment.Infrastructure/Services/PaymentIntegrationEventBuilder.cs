@@ -21,7 +21,7 @@ namespace Payment.Infrastructure.Services
                 return new PaymentSucceededIE(paymentSucceeded.CorrelationId, paymentSucceeded.UserId);
 
             if (domainEvent is PaymentFailed paymentFailed)
-                return new StockFailedIE(paymentFailed.CorrelationId, paymentFailed.UserId);
+                return new PaymentFailedIE(paymentFailed.CorrelationId, paymentFailed.UserId);
 
             throw new BusinessException(BusinessExceptionCodes.IntegrationEventError.GetHashCode().ToString(), BusinessExceptionCodes.IntegrationEventError.ToString());
         }

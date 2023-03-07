@@ -35,6 +35,8 @@ namespace Payment.Application.Features.Commands
 
                 await _uow.PaymentTransactions.Add(payment);
 
+                await _uow.SaveChangesAsync();
+
                 return BaseResult.Success();
             }
         }

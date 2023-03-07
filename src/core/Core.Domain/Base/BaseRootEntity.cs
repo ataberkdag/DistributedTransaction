@@ -7,7 +7,7 @@ namespace Core.Domain.Base
         [JsonIgnore]
         private List<IDomainEvent> _events;
 
-        public IReadOnlyCollection<IDomainEvent> DomainEvents => _events.AsReadOnly();
+        public IReadOnlyCollection<IDomainEvent> DomainEvents => _events?.AsReadOnly();
         protected BaseRootEntity()
         {
 

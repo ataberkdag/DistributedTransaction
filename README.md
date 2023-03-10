@@ -24,13 +24,14 @@
 
 ## TODO
 - [ ] Serilog ElasticSearch Sink
-- [ ] Dockerize
+- [ ] Rule Engine
 - [ ] MongoDB implementation (User Project)
 - [ ] Distributed Lock
 - [ ] Distributed Tracing (OpenTelemetry, Jaeger)
 - [ ] Authentication
 - [ ] Healthcheck
 - [ ] Gateway Logging
+- [ ] Dockerize
+- [ ] Unit Tests
 - [ ] Bugfix (Enabling DbContextHandler)
 - [ ] Bugfix (ExceptionHandler PipelineBehaviour)
-- [ ] Unit Tests

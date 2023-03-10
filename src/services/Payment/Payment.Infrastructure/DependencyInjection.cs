@@ -32,6 +32,10 @@ namespace Payment.Infrastructure
 
                     opt.MessageBusOptions = messageBusOpt.Value;
                 }
+
+                // Service Registry - Consul
+                opt.EnableServiceRegistry = true;
+                opt.ServiceRegistryOptions = configuration.GetSection("ServiceRegistry");
             });
 
             services.AddScoped<IPaymentTransactionRepository, PaymentTransactionRepository>();

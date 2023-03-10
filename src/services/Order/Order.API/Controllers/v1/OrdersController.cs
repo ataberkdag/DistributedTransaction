@@ -47,5 +47,11 @@ namespace Order.API.Controllers.v1
         {
             return CreatedAtAction(nameof(PlaceOrder), await _mediator.Send(command));
         }
+
+        [HttpGet()]
+        public string Get()
+        {
+            return "Order Service is Working!";
+        }
     }
 }

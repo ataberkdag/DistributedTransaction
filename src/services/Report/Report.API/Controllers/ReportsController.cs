@@ -6,8 +6,7 @@ namespace Report.API.Controllers
     [ApiController]
     public class ReportsController : ControllerBase
     {
-        [HttpGet]
-        public string Index()
+        public string Get()
         {
             return "Report Service is Working!";
         }

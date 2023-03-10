@@ -15,6 +15,12 @@ namespace Stock.API.Controllers
             _mediator= mediator;
         }
 
+        [HttpGet()]
+        public string Get()
+        {
+            return "Stocks Service is Working!";
+        }
+
         [HttpPost]
         public async Task<IActionResult> DecreaseStock(DecreaseStock.Command command)
         {

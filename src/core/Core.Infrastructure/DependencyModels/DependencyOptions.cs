@@ -1,4 +1,6 @@
-﻿namespace Core.Infrastructure.DependencyModels
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Core.Infrastructure.DependencyModels
 {
     public class DependencyOptions
     {
@@ -19,5 +21,8 @@
         // Message Bus - Broker
         public bool EnableMessageBus { get; set; }
         public MessageBusOptions? MessageBusOptions { get; set; }
+
+        public bool EnableServiceRegistry { get; set; }
+        public IConfiguration? ServiceRegistryOptions { get; set; }
     }
 }

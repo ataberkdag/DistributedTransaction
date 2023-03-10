@@ -1,4 +1,5 @@
-﻿using Core.Application.Services;
+﻿using Consul;
+using Core.Application.Services;
 using Core.Infrastructure.Dependencies;
 using Core.Infrastructure.DependencyModels;
 using Core.Infrastructure.Persistence;
@@ -40,6 +41,17 @@ namespace Core.Infrastructure
 
             if (dependencyOptions.Value.EnableMessageBus)
                 services.AddMessageBus(dependencyOptions.Value.MessageBusOptions);
+
+            if (dependencyOptions.Value.EnableServiceRegistry)
+            {
+                services.Configure<ServiceRegistryOptions>(dependencyOptions.Value.ServiceRegistryOptions);
+                services.AddSingleton<IConsulClient, ConsulClient>(provider => 
+                    new ConsulClient(config => config.Address = 
+                        new Uri(dependencyOptions.Value.ServiceRegistryOptions["Address"])
+                    )
+                );
+                services.AddHostedService<ConsulRegisterService>();
+            }
 
             return services;
         }

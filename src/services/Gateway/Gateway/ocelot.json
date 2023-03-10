@@ -1,0 +1,63 @@
+{
+  "Routes": [
+    {
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/v1/orders{everything}",
+      "UpstreamPathTemplate": "/v1/orders{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "ServiceName": "Order",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/stocks{everything}",
+      "UpstreamPathTemplate": "/v1/stocks{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "ServiceName": "Stock",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/payments{everything}",
+      "UpstreamPathTemplate": "/v1/payments{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "ServiceName": "Payment",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "DownstreamScheme": "http",
+      "DownstreamPathTemplate": "/api/reports{everything}",
+      "UpstreamPathTemplate": "/v1/reports{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "ServiceName": "Report",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+  }
+}

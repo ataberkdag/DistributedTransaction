@@ -23,14 +23,14 @@
 - Polly
 
 ## TODO
-[ ] Serilog ElasticSearch Sink
-[ ] Dockerize
-[ ] MongoDB implementation (User Project)
-[ ] Distributed Lock
-[ ] Distributed Tracing (OpenTelemetry, Jaeger)
-[ ] Authentication
-[ ] Healthcheck
-[ ] Gateway Logging
-[ ] Bugfix (Enabling DbContextHandler)
-[ ] Bugfix (ExceptionHandler PipelineBehaviour)
-[ ] Unit Tests
+- [ ] Serilog ElasticSearch Sink
+- [ ] Dockerize
+- [ ] MongoDB implementation (User Project)
+- [ ] Distributed Lock
+- [ ] Distributed Tracing (OpenTelemetry, Jaeger)
+- [ ] Authentication
+- [ ] Healthcheck
+- [ ] Gateway Logging
+- [ ] Bugfix (Enabling DbContextHandler)
+- [ ] Bugfix (ExceptionHandler PipelineBehaviour)
+- [ ] Unit Tests

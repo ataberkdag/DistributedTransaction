@@ -51,7 +51,7 @@ namespace Order.Application.Features.Commands
         {
             public OrderPlacedProfile()
             {
-                CreateMap<Command, CheckUserRequest>();
+                CreateMap<Command, CheckLimitRequest>();
             }
         }
         #endregion Mapper
@@ -59,21 +59,19 @@ namespace Order.Application.Features.Commands
         public class CommandHandler : IRequestHandler<Command, BaseResult<Response>>
         {
             private readonly IOrderUnitOfWork _uow;
-            private readonly IUserService _userService;
+            private readonly ILimitService _limitService;
             private readonly IMapper _mapper;
 
-            public CommandHandler(IOrderUnitOfWork uow, IUserService userService, IMapper mapper)
+            public CommandHandler(IOrderUnitOfWork uow, ILimitService limitService, IMapper mapper)
             {
                 _uow = uow;
-                _userService = userService;
+                _limitService = limitService;
                 _mapper = mapper;
             }
 
             public async Task<BaseResult<Response>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var result = await _userService.CheckUser(_mapper.Map<CheckUserRequest>(request));
-                if (!result.Succeeded)
-                    throw new BusinessException(BusinessExceptionCodes.UserInactive.GetHashCode().ToString(), BusinessExceptionCodes.UserInactive.ToString());
+                await _limitService.CheckLimit(_mapper.Map<CheckLimitRequest>(request));
 
                 var order = Order.Domain.Entities.Order.PlaceOrder(request.UserId, request.OrderItems);
 

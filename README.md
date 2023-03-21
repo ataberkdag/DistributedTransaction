@@ -25,7 +25,8 @@
 ## TODO
 - [ ] Serilog ElasticSearch Sink
 - [ ] Rule Engine
-- [ ] MongoDB implementation (User Project)
+- [ ] Identity
+- [ ] MongoDB implementation
 - [ ] Distributed Lock
 - [ ] Distributed Tracing (OpenTelemetry, Jaeger)
 - [ ] Authentication

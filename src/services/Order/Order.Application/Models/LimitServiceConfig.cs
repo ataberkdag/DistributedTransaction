@@ -1,6 +1,6 @@
 ﻿namespace Order.Application.Models
 {
-    public class UserServiceConfig
+    public class LimitServiceConfig
     {
         public string BaseUrl { get; set; }
     }

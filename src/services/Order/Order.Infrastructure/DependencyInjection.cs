@@ -69,11 +69,11 @@ namespace Order.Infrastructure
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IOrderUnitOfWork, OrderUnitOfWork>();
 
-            services.AddSingleton<UserServiceConfig>(new UserServiceConfig {
-                BaseUrl = configuration["ExternalUrls:UserService"]
+            services.AddSingleton<LimitServiceConfig>(new LimitServiceConfig {
+                BaseUrl = configuration["ExternalUrls:LimitService"]
             });
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILimitService, LimitService>();
 
             return services;
         }

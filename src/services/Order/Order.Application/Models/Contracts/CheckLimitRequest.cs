@@ -1,6 +1,6 @@
 ﻿namespace Order.Application.Models.Contracts
 {
-    public class CheckUserRequest
+    public class CheckLimitRequest
     {
         public Guid UserId { get; set; }
     }

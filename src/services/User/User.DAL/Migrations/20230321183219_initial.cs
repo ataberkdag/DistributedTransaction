@@ -144,7 +144,7 @@ namespace User.DAL.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Value = table.Column<string>(type: "text", nullable: true),
                     Discriminator = table.Column<string>(type: "text", nullable: false),
-                    ExpireDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                    ExpireDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -169,7 +169,7 @@ namespace User.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "364405d2-2d82-44a5-b70b-58453d290dcd", "admin@test.com", true, false, null, "ADMIN@TEST.COM", "ADMIN", "AQAAAAEAACcQAAAAEF6OuOzLuTToPzFhfwUj6hfxjqd0u/vmDF2d/DzgClXfyyFl6W98wvNmZ0S38o4DAw==", null, false, "977e66d3-7737-4b8b-a825-2aaf37ff1e8e", false, "Admin" });
+                values: new object[] { "02174cf0–9412–4cfe-afbf-59f706d72cf6", 0, "c986ae46-5f67-4300-a707-e99ed3a68841", "admin@test.com", true, false, null, "ADMIN@TEST.COM", "ADMIN", "AQAAAAEAACcQAAAAEH7NdzEep3zfTO42ICcsRsARZBrbAnhem2L1W2vzXMKZ8r4vMG3piIH1VEj8sKADCg==", null, false, "83fa55bf-6c5a-489d-a5ab-f57a82acd061", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

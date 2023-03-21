@@ -14,12 +14,8 @@ namespace User.DAL
             ArgumentNullException.ThrowIfNull(services, nameof(services));
 
             services.AddDbContext<UserDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("UserDb")));
-            //services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
 
-            var identityBuilder = services.AddIdentityCore<AppUser>().AddEntityFrameworkStores<UserDbContext>();
-
-            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(IdentityRole), services);
-            identityBuilder.AddEntityFrameworkStores<UserDbContext>();
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<UserDbContext>();
 
             services.Configure<IdentityOptions>(opt => {
                 opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";

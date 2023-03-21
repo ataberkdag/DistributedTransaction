@@ -251,15 +251,15 @@ namespace User.DAL.Migrations
                         {
                             Id = "02174cf0–9412–4cfe-afbf-59f706d72cf6",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "364405d2-2d82-44a5-b70b-58453d290dcd",
+                            ConcurrencyStamp = "c986ae46-5f67-4300-a707-e99ed3a68841",
                             Email = "admin@test.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEF6OuOzLuTToPzFhfwUj6hfxjqd0u/vmDF2d/DzgClXfyyFl6W98wvNmZ0S38o4DAw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEH7NdzEep3zfTO42ICcsRsARZBrbAnhem2L1W2vzXMKZ8r4vMG3piIH1VEj8sKADCg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "977e66d3-7737-4b8b-a825-2aaf37ff1e8e",
+                            SecurityStamp = "83fa55bf-6c5a-489d-a5ab-f57a82acd061",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -270,7 +270,7 @@ namespace User.DAL.Migrations
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserToken<string>");
 
                     b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasDiscriminator().HasValue("AppUserToken");
                 });

@@ -2,6 +2,7 @@
   "Routes": [
     {
       "DownstreamScheme": "http",
+      "Priority": 1,
       "DownstreamPathTemplate": "/api/v1/orders{everything}",
       "UpstreamPathTemplate": "/v1/orders{everything}",
       "UpstreamHttpMethod": [
@@ -15,6 +16,7 @@
     },
     {
       "DownstreamScheme": "http",
+      "Priority": 1,
       "DownstreamPathTemplate": "/api/stocks{everything}",
       "UpstreamPathTemplate": "/v1/stocks{everything}",
       "UpstreamHttpMethod": [
@@ -28,6 +30,7 @@
     },
     {
       "DownstreamScheme": "http",
+      "Priority": 1,
       "DownstreamPathTemplate": "/api/payments{everything}",
       "UpstreamPathTemplate": "/v1/payments{everything}",
       "UpstreamHttpMethod": [
@@ -41,6 +44,7 @@
     },
     {
       "DownstreamScheme": "http",
+      "Priority": 1,
       "DownstreamPathTemplate": "/api/reports{everything}",
       "UpstreamPathTemplate": "/v1/reports{everything}",
       "UpstreamHttpMethod": [
@@ -48,6 +52,34 @@
         "POST"
       ],
       "ServiceName": "Report",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "DownstreamScheme": "http",
+      "Priority": 1,
+      "DownstreamPathTemplate": "/api/limits{everything}",
+      "UpstreamPathTemplate": "/v1/limits{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "ServiceName": "Limit",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
+    {
+      "DownstreamScheme": "http",
+      "Priority": 0,
+      "DownstreamPathTemplate": "/api/authentication/CreateToken",
+      "UpstreamPathTemplate": "/v1/authentication/CreateToken",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "ServiceName": "User",
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
       }

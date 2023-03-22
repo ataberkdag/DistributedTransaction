@@ -35,4 +35,3 @@
 - [ ] Dockerize
 - [ ] Unit Tests
 - [ ] Bugfix (Enabling DbContextHandler)
-- [ ] Bugfix (ExceptionHandler PipelineBehaviour)

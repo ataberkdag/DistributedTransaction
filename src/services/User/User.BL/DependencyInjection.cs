@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Core.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -31,6 +32,10 @@ namespace User.BL
             services.AddJWT();
 
             // TODO: Consul implementation
+            services.AddCoreInfrastructure(opt => {
+                opt.EnableServiceRegistry = true;
+                opt.ServiceRegistryOptions = configuration.GetSection("ServiceRegistry");
+            });
 
             return services;
         }

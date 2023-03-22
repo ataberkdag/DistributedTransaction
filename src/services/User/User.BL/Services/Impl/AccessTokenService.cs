@@ -57,7 +57,7 @@ namespace User.BL.Services.Impl
 
         private TokenInfo GenerateToken(AppUser user, List<string> userRoles)
         {
-            DateTime expireDate = DateTime.Now.AddMinutes(5);
+            DateTime expireDate = DateTime.Now.AddMinutes(30);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_tokenOptions.SecretKey);

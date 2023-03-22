@@ -22,7 +22,7 @@ namespace Core.Application
             services.AddValidatorsFromAssembly(assembly);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
-            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionHandlingBehaviour<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             return services;
@@ -30,7 +30,7 @@ namespace Core.Application
 
         public static IApplicationBuilder UseCoreApplication(this IApplicationBuilder builder)
         {
-            builder.UseMiddleware<ExceptionHandlingMiddleware>();
+            //builder.UseMiddleware<ExceptionHandlingMiddleware>();
             builder.UseMiddleware<CorrelationMiddleware>();
 
             return builder;

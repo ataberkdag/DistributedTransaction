@@ -1,5 +1,6 @@
 ﻿using Core.Application.Common;
 using Core.Application.Services;
+using FluentValidation;
 using MediatR;
 using Stock.Domain.Dtos;
 using Stock.Domain.Entities;
@@ -31,7 +32,7 @@ namespace Stock.Application.Features.Commands
             {
                 var firstOrderItem = request.OrderItems?.FirstOrDefault();
                 if (firstOrderItem == null)
-                    throw new Exception();
+                    throw new ValidationException("OrderItem not found");
 
                 var stock = Stock.Domain.Entities.Stock.Create(firstOrderItem.ItemId, firstOrderItem.Quantity, 12);
 

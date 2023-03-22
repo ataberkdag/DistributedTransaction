@@ -1,7 +1,13 @@
+using Core.Infrastructure;
+using Microsoft.Extensions.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddCoreInfrastructure(opt => {
+    opt.EnableServiceRegistry = true;
+    opt.ServiceRegistryOptions = configuration.GetSection("ServiceRegistry");
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

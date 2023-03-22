@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Core.Application.Common;
-using Core.Application.Exceptions;
 using FluentValidation;
 using MediatR;
 using Order.Application.Models.Contracts;
@@ -12,7 +11,7 @@ namespace Order.Application.Features.Commands
 {
     public static class PlaceOrder
     {
-        public class Command : IRequest<BaseResult<Response>>
+        public class Command : IRequest<BaseResult>
         { 
             public Guid UserId { get; set; }
             public List<OrderItemDto> OrderItems { get; set; }
@@ -26,7 +25,7 @@ namespace Order.Application.Features.Commands
             {
                 RuleFor(x => x.UserId).NotEmpty().WithMessage("User should be specified!");
 
-                RuleFor(x => x.OrderItems).NotNull().WithMessage("Order items is required!");
+                RuleFor(x => x.OrderItems).NotEmpty().WithMessage("Order items is required!");
 
                 RuleForEach(x => x.OrderItems).SetValidator(new OrderItemDtoValidator());
             }
@@ -56,7 +55,7 @@ namespace Order.Application.Features.Commands
         }
         #endregion Mapper
 
-        public class CommandHandler : IRequestHandler<Command, BaseResult<Response>>
+        public class CommandHandler : IRequestHandler<Command, BaseResult>
         {
             private readonly IOrderUnitOfWork _uow;
             private readonly ILimitService _limitService;
@@ -69,7 +68,7 @@ namespace Order.Application.Features.Commands
                 _mapper = mapper;
             }
 
-            public async Task<BaseResult<Response>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<BaseResult> Handle(Command request, CancellationToken cancellationToken)
             {
                 await _limitService.CheckLimit(_mapper.Map<CheckLimitRequest>(request));
 

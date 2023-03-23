@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Order.Application.Features.Commands;
 
@@ -8,6 +9,7 @@ namespace Order.API.Controllers.v1
     [ApiController]
     [ApiVersion("1.0")]
     [Produces("application/json")]
+    //[Authorize(Roles = "User")]
     public class OrdersController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -43,15 +45,24 @@ namespace Order.API.Controllers.v1
         [ProducesResponseType(typeof(PlaceOrder.Response), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> PlaceOrder(PlaceOrder.Command command)
         {
             return CreatedAtAction(nameof(PlaceOrder), await _mediator.Send(command));
         }
 
         [HttpGet()]
+        [AllowAnonymous]
         public string Get()
         {
             return "Order Service is Working!";
+        }
+
+        [HttpGet("AdminGet")]
+        [Authorize(Roles = "Admin")]
+        public string AdminGet()
+        {
+            return "Admin | Order Service is Working!";
         }
     }
 }

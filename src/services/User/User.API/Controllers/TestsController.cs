@@ -5,13 +5,13 @@ namespace User.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User,Ataberk")]
+    [Authorize(Roles = "User")]
     public class TestsController : ControllerBase
     {
         [HttpGet("Access")]
         public string Get()
         {
-            return "User/Ataberk accessed!";
+            return "User accessed!";
         }
 
         [HttpGet("AdminAccess")]

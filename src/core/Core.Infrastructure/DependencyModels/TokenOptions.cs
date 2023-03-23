@@ -1,4 +1,4 @@
-﻿namespace User.BL.Models
+﻿namespace Core.Infrastructure.DependencyModels
 {
     public class TokenOptions
     {

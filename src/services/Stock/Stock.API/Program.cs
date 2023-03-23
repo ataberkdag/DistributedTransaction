@@ -4,14 +4,14 @@ using Stock.API.Consumers;
 using Stock.Application;
 using Stock.Infrastructure;
 using Stock.Infrastructure.Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Logging.AddCustomLogging(builder.Configuration);
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration,x => {
+builder.Services.AddInfrastructure(builder.Configuration, Assembly.GetExecutingAssembly(), AppContext.BaseDirectory, x => {
     x.Host = builder.Configuration["MessageBroker:Host"];
     x.UserName = builder.Configuration["MessageBroker:UserName"];
     x.Password = builder.Configuration["MessageBroker:Password"];
@@ -31,9 +31,9 @@ builder.Services.AddInfrastructure(builder.Configuration,x => {
 });
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options => options.AddDefaultPolicy(policy =>
+    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
 
 var app = builder.Build();
 
@@ -43,6 +43,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

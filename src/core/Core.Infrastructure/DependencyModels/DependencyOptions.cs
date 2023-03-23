@@ -24,5 +24,10 @@ namespace Core.Infrastructure.DependencyModels
 
         public bool EnableServiceRegistry { get; set; }
         public IConfiguration? ServiceRegistryOptions { get; set; }
+
+        // Authentication
+        public bool EnableAuthentication { get; set; }
+        public IConfiguration? TokenOptions { get; set; }
+        public SwaggerOptions? SwaggerOptions { get; set; }
     }
 }

@@ -53,6 +53,12 @@ namespace Core.Infrastructure
                 services.AddHostedService<ConsulRegisterService>();
             }
 
+            if (dependencyOptions.Value.EnableAuthentication)
+            {
+                services.Configure<TokenOptions>(dependencyOptions.Value.TokenOptions);
+                services.AddCustomAuthentication(dependencyOptions.Value.SwaggerOptions);
+            }
+
             return services;
         }
 

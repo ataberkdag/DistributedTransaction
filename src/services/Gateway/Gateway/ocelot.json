@@ -9,6 +9,10 @@
         "GET",
         "POST"
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "ServiceName": "Order",
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
@@ -23,6 +27,10 @@
         "GET",
         "POST"
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "ServiceName": "Stock",
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
@@ -37,6 +45,10 @@
         "GET",
         "POST"
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
       "ServiceName": "Payment",
       "LoadBalancerOptions": {
         "Type": "LeastConnection"

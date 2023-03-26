@@ -95,7 +95,25 @@
       "LoadBalancerOptions": {
         "Type": "LeastConnection"
       }
-    }
+    },
+    {
+      "DownstreamScheme": "http",
+      "Priority": 1,
+      "DownstreamPathTemplate": "/api/{everything}",
+      "UpstreamPathTemplate": "/v1/usermanagement/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "ServiceName": "User",
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      }
+    },
   ],
   "GlobalConfiguration": {
     "ServiceDiscoveryProvider": {

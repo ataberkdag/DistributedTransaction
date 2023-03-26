@@ -5,10 +5,10 @@ namespace User.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
     public class TestsController : ControllerBase
     {
         [HttpGet("Access")]
+        [AllowAnonymous]
         public string Get()
         {
             return "User accessed!";

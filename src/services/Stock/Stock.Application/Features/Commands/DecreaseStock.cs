@@ -3,7 +3,6 @@ using Core.Application.Services;
 using FluentValidation;
 using MediatR;
 using Stock.Domain.Dtos;
-using Stock.Domain.Entities;
 using Stock.Domain.Interfaces;
 
 namespace Stock.Application.Features.Commands

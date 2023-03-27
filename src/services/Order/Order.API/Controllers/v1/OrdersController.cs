@@ -27,7 +27,7 @@ namespace Order.API.Controllers.v1
         /// <remarks>
         /// Sample request:
         ///
-        ///     GET /PlaceOrder
+        ///     POST /PlaceOrder
         ///     {
         ///        "userId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
         ///        "orderItems": [
@@ -45,7 +45,7 @@ namespace Order.API.Controllers.v1
         [ProducesResponseType(typeof(PlaceOrder.Response), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> PlaceOrder(PlaceOrder.Command command)
         {
             return CreatedAtAction(nameof(PlaceOrder), await _mediator.Send(command));

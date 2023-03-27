@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 namespace Core.Infrastructure
 {
@@ -62,18 +63,34 @@ namespace Core.Infrastructure
             return services;
         }
 
-        public static ILoggingBuilder AddCoreLogging(this ILoggingBuilder builder, IConfiguration configuration)
+        public static ILoggingBuilder AddCoreLogging(this ILoggingBuilder builder, IConfiguration configuration, Action<LoggingOptions> loggingOptions)
         {
-            var logger = new LoggerConfiguration()
+            var options = new LoggingOptions();
+            loggingOptions(options);
+
+            var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(configuration)
                 .Enrich.FromLogContext()
-                .Enrich.WithCorrelationIdHeader("CorrelationId")
-                .CreateLogger();
+                .Enrich.WithCorrelationIdHeader("CorrelationId");
+
+            if (options.EnableElasticLogging)
+                loggerConfiguration.WriteTo.Elasticsearch(ConfigureElasticSink(options));
+
+            var logger = loggerConfiguration.CreateLogger();
 
             builder.ClearProviders();
             builder.AddSerilog(logger);
 
             return builder;
+        }
+
+        private static ElasticsearchSinkOptions ConfigureElasticSink(LoggingOptions loggingOptions)
+        {
+            return new ElasticsearchSinkOptions(new Uri(loggingOptions.ElasticUri))
+            {
+                AutoRegisterTemplate = true,
+                IndexFormat = $"{loggingOptions.ApplicationName}-{DateTime.UtcNow:yyyy}"
+            };
         }
     }
 }

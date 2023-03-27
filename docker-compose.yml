@@ -12,6 +12,8 @@ services:
       POSTGRES_PASSWORD: sa1234
     ports:
       - 5432:5432
+    networks:
+      - dtnetwork
 
   pgadmin:
     image: dpage/pgadmin4
@@ -23,12 +25,16 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data://root/.pgadmin
+    networks:
+      - dtnetwork
 
   redis:
     image: redis:6.2
     container_name: 'redis'
     ports:
       - 5002:6379
+    networks:
+      - dtnetwork
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -44,6 +50,8 @@ services:
      interval: 30s
      timeout: 10s
      retries: 5
+    networks:
+      - dtnetwork
 
   consul:
     image: consul
@@ -52,9 +60,43 @@ services:
     container_name: consul
     ports:
       - 8500:8500
+    networks:
+      - dtnetwork
+
+  elasticsearch:
+    container_name: dt-els
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.1
+    ports:
+      - 9200:9200
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    networks:
+      - dtnetwork
+
+  kibana:
+    container_name: dt-kibana
+    image: docker.elastic.co/kibana/kibana:7.16.1
+    ports:
+      - 5601:5601
+    depends_on:
+      - dt-els
+    environment:
+      - ELASTICSEARCH_URL=http://localhost:9200
+    networks:
+      - dtnetwork
+
+networks:
+  dtnetwork:
+    driver: bridge
 
 volumes:
   db_volume: 
   rabbitmq_data:
   rabbitmq_log:
   pgadmin_data:
+  elasticsearch-data:

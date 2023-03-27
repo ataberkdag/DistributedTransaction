@@ -94,7 +94,11 @@ namespace Order.Infrastructure
 
         public static ILoggingBuilder AddCustomLogging(this ILoggingBuilder builder, IConfiguration configuration)
         {
-            builder.AddCoreLogging(configuration);
+            builder.AddCoreLogging(configuration, options => { 
+                options.EnableElasticLogging = true;
+                options.ApplicationName = "Order";
+                options.ElasticUri = configuration["ElasticConfiguration:Uri"];
+            });
 
             return builder;
         }

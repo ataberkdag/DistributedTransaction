@@ -37,7 +37,11 @@ namespace Report.Infrastructure
 
         public static ILoggingBuilder AddCustomLogging(this ILoggingBuilder builder, IConfiguration configuration)
         {
-            builder.AddCoreLogging(configuration);
+            builder.AddCoreLogging(configuration, options => {
+                options.EnableElasticLogging = true;
+                options.ApplicationName = "Report";
+                options.ElasticUri = configuration["ElasticConfiguration:Uri"];
+            });
 
             return builder;
         }

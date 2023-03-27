@@ -11,6 +11,9 @@
 - Dapper
 - MassTransit, RabbitMQ
 - Outbox Pattern
+- Identity
+- Authentication
+- Role based Authorization
 - Distributed Cache (Redis)
 - Service Discovery/Registry (Consul)
 - Gateway (Ocelot)
@@ -25,11 +28,9 @@
 ## TODO
 - [ ] Serilog ElasticSearch Sink
 - [ ] Rule Engine
-- [ ] Identity
 - [ ] MongoDB implementation
 - [ ] Distributed Lock
 - [ ] Distributed Tracing (OpenTelemetry, Jaeger)
-- [ ] Authentication
 - [ ] Healthcheck
 - [ ] Gateway Logging
 - [ ] Dockerize

@@ -90,6 +90,16 @@ services:
     networks:
       - dtnetwork
 
+  mongodb_es:
+    image: mongo:5.0
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=sample
+
 networks:
   dtnetwork:
     driver: bridge
@@ -100,3 +110,4 @@ volumes:
   rabbitmq_log:
   pgadmin_data:
   elasticsearch-data:
+  mongodb_data:

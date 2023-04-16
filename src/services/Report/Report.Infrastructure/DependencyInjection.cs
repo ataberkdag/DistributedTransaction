@@ -1,9 +1,13 @@
 ﻿using Core.Infrastructure;
+using Core.Infrastructure.Dependencies;
 using Core.Infrastructure.DependencyModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Report.Application.Options;
+using Report.Application.Services;
+using Report.Infrastructure.Services;
 
 namespace Report.Infrastructure
 {
@@ -31,6 +35,12 @@ namespace Report.Infrastructure
                 opt.EnableServiceRegistry = true;
                 opt.ServiceRegistryOptions = configuration.GetSection("ServiceRegistry");
             });
+
+            services.AddMongoDb(configuration);
+
+            services.Configure<MongoOptions>(configuration.GetSection("MongoSettings"));
+
+            services.AddScoped<IReportItemService, ReportItemService>();
 
             return services;
         }

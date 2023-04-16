@@ -25,6 +25,8 @@ builder.Services.AddInfrastructure(builder.Configuration, Assembly.GetExecutingA
     };
     x.Endpoints = (context, cfg) =>
     {
+        cfg.UseMessageRetry(r => r.Immediate(2));
+
         cfg.ReceiveEndpoint(string.Concat(RabbitMqConsts.StockFailedQueueName, "_", RabbitMqConsts.OrderApplicationName), e => {
             e.ConfigureConsumer<StockFailedConsumer>(context);
         });

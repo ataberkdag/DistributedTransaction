@@ -9,6 +9,7 @@
 - Mediator (MediatR)
 - EF Core (PostgreSQL)
 - Dapper
+- MongoDB
 - MassTransit, RabbitMQ
 - Outbox Pattern
 - Identity
@@ -67,7 +68,6 @@ update-database
 
 ## TODO
 - [ ] Rule Engine (.Net Rules Engine)
-- [ ] MongoDB implementation
 - [ ] Distributed Lock
 - [ ] Distributed Tracing (OpenTelemetry, Jaeger)
 - [ ] Healthcheck

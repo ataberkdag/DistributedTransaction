@@ -1,11 +1,12 @@
 ﻿using Core.Application.Exceptions;
 using Core.Application.Services;
 using Moq;
+using Order.Application;
 using Order.Application.Models;
 using Order.Application.Models.Contracts;
 using Order.Infrastructure.Services;
 
-namespace Order.Test
+namespace Order.Test.Services
 {
     public class LimitServiceTests
     {
@@ -54,7 +55,7 @@ namespace Order.Test
 
             var ex = await Assert.ThrowsAsync<BusinessException>(() => limitService.CheckLimit(new CheckLimitRequest { UserId = Guid.NewGuid() }));
 
-            Assert.Equal("LimitExceeded", ex.Message);
+            Assert.Equal(BusinessExceptionCodes.LimitExceeded.ToString(), ex.Message);
         }
 
         [Fact]
@@ -77,7 +78,7 @@ namespace Order.Test
 
             var ex = await Assert.ThrowsAsync<BusinessException>(() => limitService.CheckLimit(new CheckLimitRequest { UserId = Guid.NewGuid() }));
 
-            Assert.Equal("LimitServiceIntegrationError", ex.Message);
+            Assert.Equal(BusinessExceptionCodes.LimitServiceIntegrationError.ToString(), ex.Message);
         }
     }
 }

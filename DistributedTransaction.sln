@@ -77,9 +77,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Limit", "Limit", "{1DFE1137
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Limit.API", "src\services\Limit\Limit.API\Limit.API.csproj", "{11C00D86-2B47-440A-B43F-91FB6ECD693D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Report.Domain", "src\services\Report\Report.Domain\Report.Domain.csproj", "{FAEE5611-2603-4711-8182-8D53D71B15B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Report.Domain", "src\services\Report\Report.Domain\Report.Domain.csproj", "{FAEE5611-2603-4711-8182-8D53D71B15B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Test", "src\tests\Order.Test\Order.Test.csproj", "{D43C34DA-3D69-466C-A99F-237CB3DF224A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.Test", "src\tests\Order.Test\Order.Test.csproj", "{D43C34DA-3D69-466C-A99F-237CB3DF224A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.Test", "src\tests\Payment.Test\Payment.Test.csproj", "{C5F7E836-173E-47D4-B67F-B57C215F2FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -199,6 +201,10 @@ Global
 		{D43C34DA-3D69-466C-A99F-237CB3DF224A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D43C34DA-3D69-466C-A99F-237CB3DF224A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D43C34DA-3D69-466C-A99F-237CB3DF224A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5F7E836-173E-47D4-B67F-B57C215F2FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5F7E836-173E-47D4-B67F-B57C215F2FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5F7E836-173E-47D4-B67F-B57C215F2FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5F7E836-173E-47D4-B67F-B57C215F2FE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +245,7 @@ Global
 		{11C00D86-2B47-440A-B43F-91FB6ECD693D} = {1DFE1137-18C0-4D9D-8EC6-4084E507D743}
 		{FAEE5611-2603-4711-8182-8D53D71B15B5} = {EE0BE727-A29F-4125-B8FD-B7DE49490F8E}
 		{D43C34DA-3D69-466C-A99F-237CB3DF224A} = {76364701-24B3-4E1C-9708-99E0609A1217}
+		{C5F7E836-173E-47D4-B67F-B57C215F2FE5} = {76364701-24B3-4E1C-9708-99E0609A1217}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1C55D68F-3437-4BF8-B57B-BA5D296D61D6}

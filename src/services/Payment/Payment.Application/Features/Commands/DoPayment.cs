@@ -1,5 +1,4 @@
 ﻿using Core.Application.Common;
-using Core.Application.Exceptions;
 using MediatR;
 using Payment.Domain.Entities;
 using Payment.Domain.Interfaces;
@@ -10,9 +9,9 @@ namespace Payment.Application.Features.Commands
     {
         public class Command : IRequest<BaseResult>
         {
-            public Guid UserId { get; private set; }
-            public Guid CorrelationId { get; private set; }
-            public decimal TotalAmount { get; private set; }
+            public Guid UserId { get; set; }
+            public Guid CorrelationId { get; set; }
+            public decimal TotalAmount { get; set; }
         }
 
         public class CommandHandler : IRequestHandler<Command, BaseResult>

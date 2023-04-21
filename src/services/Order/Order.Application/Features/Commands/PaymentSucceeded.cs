@@ -9,8 +9,8 @@ namespace Order.Application.Features.Commands
     {
         public class Command : IRequest<BaseResult>
         {
-            public Guid CorrelationId { get; private set; }
-            public Guid UserId { get; private set; }
+            public Guid CorrelationId { get; set; }
+            public Guid UserId { get; set; }
         }
 
         public class CommandHandler : IRequestHandler<Command, BaseResult>

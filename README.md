@@ -16,6 +16,7 @@
 - Authentication
 - Role based Authorization
 - Distributed Cache (Redis)
+- Distributed Lock (Redis - Redlock)
 - Service Discovery/Registry (Consul)
 - Gateway (Ocelot)
 - Serilog (File, Console, ElasticSearch)
@@ -68,7 +69,6 @@ update-database
 
 ## TODO
 - [ ] Rule Engine (.Net Rules Engine)
-- [ ] Distributed Lock
 - [ ] Distributed Tracing (OpenTelemetry, Jaeger)
 - [ ] Healthcheck
 - [ ] Gateway Logging

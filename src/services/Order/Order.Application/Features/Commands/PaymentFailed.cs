@@ -1,5 +1,6 @@
 ﻿using Core.Application.Common;
 using Core.Application.Exceptions;
+using Core.Application.Services;
 using MediatR;
 using Order.Domain.Interfaces;
 
@@ -16,13 +17,20 @@ namespace Order.Application.Features.Commands
         public class CommandHandler : IRequestHandler<Command, BaseResult>
         {
             private readonly IOrderUnitOfWork _uow;
-            public CommandHandler(IOrderUnitOfWork uow)
+            private readonly IDistributedLockManager _dlm;
+
+            public CommandHandler(IOrderUnitOfWork uow,
+                IDistributedLockManager dlm)
             {
                 _uow = uow;
+                _dlm = dlm;
             }
 
             public async Task<BaseResult> Handle(Command request, CancellationToken cancellationToken)
             {
+                // Trying to unlock User.
+                await _dlm.UnLock(request.UserId.ToString());
+
                 var order = (await _uow.Orders.FindByQuery(x => x.CorrelationId == request.CorrelationId)).FirstOrDefault();
 
                 // TODO: Rule Engine

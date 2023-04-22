@@ -7,6 +7,7 @@
         LimitExceeded = 1001,
         OrderNotFound = 2000,
         OrderProcessed = 2001,
+        AnotherOrderProcessing = 2002,
         IntegrationEventError = 8888
     }
 }

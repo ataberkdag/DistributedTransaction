@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Core.Application.Common;
+using Core.Application.Exceptions;
+using Core.Application.Services;
 using FluentValidation;
 using MediatR;
 using Order.Application.Models.Contracts;
@@ -60,16 +62,25 @@ namespace Order.Application.Features.Commands
             private readonly IOrderUnitOfWork _uow;
             private readonly ILimitService _limitService;
             private readonly IMapper _mapper;
+            private readonly IDistributedLockManager _dlm;
 
-            public CommandHandler(IOrderUnitOfWork uow, ILimitService limitService, IMapper mapper)
+            public CommandHandler(IOrderUnitOfWork uow, 
+                ILimitService limitService, 
+                IMapper mapper,
+                IDistributedLockManager dlm)
             {
                 _uow = uow;
                 _limitService = limitService;
                 _mapper = mapper;
+                _dlm = dlm;
             }
 
             public async Task<BaseResult> Handle(Command request, CancellationToken cancellationToken)
             {
+                // Trying to lock User. Throw exception if it failure
+                if (!await _dlm.Lock(request.UserId.ToString()))
+                    throw new BusinessException(BusinessExceptionCodes.AnotherOrderProcessing.GetHashCode().ToString(), BusinessExceptionCodes.AnotherOrderProcessing.ToString());
+
                 await _limitService.CheckLimit(_mapper.Map<CheckLimitRequest>(request));
 
                 var order = Order.Domain.Entities.Order.PlaceOrder(request.UserId, request.OrderItems);

@@ -34,6 +34,9 @@ namespace Core.Infrastructure
             if (dependencyOptions.Value.EnableDistributedCache)
                 services.AddDistributedCache(dependencyOptions.Value.DistributedCacheOptions);
 
+            if (dependencyOptions.Value.EnableDistributedLock)
+                services.AddDistributedLock(dependencyOptions.Value.DistributedLockOptions);
+
             if (dependencyOptions.Value.EnableApiVersioning)
                 services.AddCustomApiVersioning(dependencyOptions.Value.ApiVersioningOptions);
 

@@ -22,6 +22,7 @@
     <PackageReference Include="MongoDB.Driver" Version="2.19.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
     <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="redlock-cs-async" Version="2.0.57" />
     <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="9.0.0" />

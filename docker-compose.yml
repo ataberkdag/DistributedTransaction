@@ -32,7 +32,23 @@ services:
     image: redis:6.2
     container_name: 'redis'
     ports:
-      - 5002:6379
+      - 6002:6379
+    networks:
+      - dtnetwork
+
+  redis_2:
+    image: redis:6.2
+    container_name: 'redis_2'
+    ports:
+      - 6003:6379
+    networks:
+      - dtnetwork
+
+  redis_3:
+    image: redis:6.2
+    container_name: 'redis_3'
+    ports:
+      - 6004:6379
     networks:
       - dtnetwork
 

@@ -11,6 +11,10 @@ namespace Core.Infrastructure.DependencyModels
         public bool EnableDistributedCache { get; set; }
         public DistributedCacheOptions? DistributedCacheOptions { get; set; }
 
+        // Distributed Lock
+        public bool EnableDistributedLock { get; set; }
+        public DistributedLockOptions? DistributedLockOptions { get; set; }
+
         // Api Versioning
         public bool EnableApiVersioning { get; set; }
         public CustomApiVersioningOptions? ApiVersioningOptions { get; set; }

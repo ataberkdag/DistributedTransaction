@@ -42,6 +42,11 @@ namespace Order.Infrastructure
                     Password = configuration["DistributedCache:Password"]
                 };
 
+                // Distributed Lock
+                opt.EnableDistributedLock = true;
+                services.Configure<DistributedLockOptions>(opt => configuration.GetSection("DistributedLock").Bind(opt));
+                opt.DistributedLockOptions = services.BuildServiceProvider().GetRequiredService<IOptions<DistributedLockOptions>>().Value;
+
                 // Api Versioning
                 opt.EnableApiVersioning = true;
                 opt.ApiVersioningOptions = new Core.Infrastructure.DependencyModels.CustomApiVersioningOptions

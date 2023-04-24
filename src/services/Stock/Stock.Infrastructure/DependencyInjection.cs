@@ -64,7 +64,7 @@ namespace Stock.Infrastructure
 
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<IStockUnitOfWork, StockUnitOfWork>();
-            services.AddScoped<ICachedStockRepository, CachedStockRepository>();
+            services.Decorate<IStockRepository, CachedStockRepository>();
             return services;
         }
 

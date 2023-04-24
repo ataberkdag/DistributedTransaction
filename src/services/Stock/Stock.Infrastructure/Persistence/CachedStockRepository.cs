@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Stock.Infrastructure.Persistence
 {
-    public class CachedStockRepository : ICachedStockRepository
+    public class CachedStockRepository : IStockRepository
     {
         private readonly IStockRepository _decorated;
         private readonly ICacheProvider _cacheProvider;

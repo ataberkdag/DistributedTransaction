@@ -1,5 +1,6 @@
 ﻿using Core.Application.Common;
 using Core.Application.Exceptions;
+using Core.Application.Services;
 using FluentAssertions;
 using Moq;
 using Order.Application;
@@ -22,7 +23,10 @@ namespace Order.Test.Features
                 It.IsAny<Expression<Func<Domain.Entities.Order, bool>>>(), It.IsAny<bool>()))
                 .ReturnsAsync(new List<Domain.Entities.Order> { order });
 
-            var paymentSuccededCommandHandler = new PaymentSucceeded.CommandHandler(orderUnitOfWork.Object);
+            var distributedLock = new Mock<IDistributedLockManager>();
+            distributedLock.Setup(x => x.UnLock(It.IsAny<string>())).ReturnsAsync(true);
+
+            var paymentSuccededCommandHandler = new PaymentSucceeded.CommandHandler(orderUnitOfWork.Object, distributedLock.Object);
 
             var command = new PaymentSucceeded.Command
             {
@@ -46,7 +50,10 @@ namespace Order.Test.Features
                 It.IsAny<Expression<Func<Domain.Entities.Order, bool>>>(), It.IsAny<bool>()))
                 .ReturnsAsync(new List<Domain.Entities.Order>());
 
-            var paymentSuccededCommandHandler = new PaymentSucceeded.CommandHandler(orderUnitOfWork.Object);
+            var distributedLock = new Mock<IDistributedLockManager>();
+            distributedLock.Setup(x => x.UnLock(It.IsAny<string>())).ReturnsAsync(true);
+
+            var paymentSuccededCommandHandler = new PaymentSucceeded.CommandHandler(orderUnitOfWork.Object, distributedLock.Object);
 
             var command = new PaymentSucceeded.Command
             {
@@ -73,7 +80,10 @@ namespace Order.Test.Features
                 It.IsAny<Expression<Func<Domain.Entities.Order, bool>>>(), It.IsAny<bool>()))
                 .ReturnsAsync(new List<Domain.Entities.Order> { order });
 
-            var paymentSuccededCommandHandler = new PaymentSucceeded.CommandHandler(orderUnitOfWork.Object);
+            var distributedLock = new Mock<IDistributedLockManager>();
+            distributedLock.Setup(x => x.UnLock(It.IsAny<string>())).ReturnsAsync(true);
+
+            var paymentSuccededCommandHandler = new PaymentSucceeded.CommandHandler(orderUnitOfWork.Object, distributedLock.Object);
 
             var command = new PaymentSucceeded.Command
             {
